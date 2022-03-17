@@ -57,8 +57,10 @@
                                     <td>{{$key+1}}</td>
                                     <td><a target="_blank"
                                            href="{{$data_menux->url_before}}">{{$data_menux->url_before}}</a></td>
-                                    <td><a target="_blank"
-                                           href="{{$data_menux->url_after}}">{{$data_menux->url_after}}</a></td>
+                                    <td>
+                                        <a href="{{ route('shorten.link', $data_menux->url_after) }}"
+                                           target="_blank">{{ route('shorten.link', $data_menux->url_after) }}</a>
+                                    </td>
                                     <td>
                                         <div class="col-sm-6 col-md-4 col-xl-3">
                                             <button type="button" class="btn btn-warning waves-effect waves-light"
@@ -131,7 +133,7 @@
         function btnModalm(id) {
             // console.log(id)
             $.ajax({
-                url: 'dashboard/' + id +'/edit',
+                url: 'dashboard/' + id + '/edit',
                 type: 'GET',
                 success: function (data) {
                     $("#form_edit").attr('action', 'dashboard/' + id);
@@ -144,7 +146,7 @@
 
         function btn_del(id) {
             if (confirm('Confirm to Delete?')) {
-                $('#form_del').attr('action', 'dashboard/'  + id);
+                $('#form_del').attr('action', 'dashboard/' + id);
                 $("#form_del").submit();
             }
         }

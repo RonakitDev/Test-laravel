@@ -18,4 +18,5 @@ Route::group(['middleware' => ['auth']], function () {
     // Profiles
     Route::get('/', [BitlyController::class, 'index']);
     Route::resource('dashboard', BitlyController::class);
+    Route::get('{code}', [BitlyController::class, 'shortenLink'])->name('shorten.link');
 });

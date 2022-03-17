@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data;
+use App\Models\ShortLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Shivella\Bitly\Facade\Bitly;
 
 class BitlyController extends Controller
@@ -42,10 +44,12 @@ class BitlyController extends Controller
      */
     public function store(Request $request)
     {
-        $url = Bitly::getUrl($request->url); // http://bit.ly/nHcn3
+//        dd($request);
+        $str = Str::random(6);
+//        $url = Bitly::getUrl($request->url); // http://bit.ly/nHcn3
         $data_befor = new Data();
         $data_befor->url_before = $request['url'];
-        $data_befor->url_after = $url;
+        $data_befor->url_after = $str;
         $data_befor->save();
         return redirect('dashboard');
     }
@@ -80,10 +84,10 @@ class BitlyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $url = Bitly::getUrl($request->url);
+        $str = Str::random(6);
         $update = Data::find($id);
         $update->url_before = $request['url'];
-        $update->url_after = $url;
+        $update->url_after = $str;
         $update->save();
         return redirect('dashboard');
     }
@@ -98,7 +102,11 @@ class BitlyController extends Controller
     {
         $del = Data::find($id);
         $del->delete();
-
         return redirect('dashboard');
+    }
+    public function shortenLink($code)
+    {
+        $find = Data::where('url_after', $code)->first();
+        return redirect($find->url_before);
     }
 }
