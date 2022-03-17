@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Route::get('/404', function () {
+//    return view('wait');
+//});
 Route::group(['middleware' => ['auth']], function () {
     // Profiles
     Route::get('/', [BitlyController::class, 'index']);
     Route::resource('dashboard', BitlyController::class);
+    Route::get('status', [BitlyController::class, 'update_status']);
     Route::get('{code}', [BitlyController::class, 'shortenLink'])->name('shorten.link');
 });

@@ -50,6 +50,7 @@ class BitlyController extends Controller
         $data_befor = new Data();
         $data_befor->url_before = $request['url'];
         $data_befor->url_after = $str;
+        $data_befor->status = 0;
         $data_befor->save();
         return redirect('dashboard');
     }
@@ -75,6 +76,7 @@ class BitlyController extends Controller
     {
         return Data::find($id);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -104,9 +106,33 @@ class BitlyController extends Controller
         $del->delete();
         return redirect('dashboard');
     }
+
     public function shortenLink($code)
     {
         $find = Data::where('url_after', $code)->first();
-        return redirect($find->url_before);
+        if ($find){
+            if ($find->status) {
+                return redirect($find->url_before);
+            }
+            else {
+                return view('wait');
+            }
+        }else {
+            return view('wait');
+        }
+    }
+
+    public function update_status(Request $request)
+    {
+        Data::where('id', $request->id)
+            ->update([
+                'status' => $request->one
+            ]);
+        return 1;
+    }
+
+    public function wait()
+    {
+        return view('wait');
     }
 }

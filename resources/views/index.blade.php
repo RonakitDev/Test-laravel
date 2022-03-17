@@ -70,7 +70,15 @@
                                                     onclick="btn_del({{$data_menux->id }})">delete
                                             </button>
                                         </div>
+                                        <br>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input chek" type="checkbox" value="{{$data_menux->id}}"
+                                                   id="Check_x{{$data_menux->id}}" {{$data_menux->status == 1 ? 'checked' : ''}}>
 
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    สถานะใช้งาน
+                                                </label>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -149,6 +157,37 @@
                 $('#form_del').attr('action', 'dashboard/' + id);
                 $("#form_del").submit();
             }
+        }
+
+        $('.chek').on('change', function () {
+            show_($(this).val());
+        });
+
+        function show_(id) {
+            var one = 0;
+            if ($('#Check_x' + id).is(':checked')) {
+                one = 1;
+            } else {
+                one = 0;
+            }
+            $.ajax({
+                url: 'status',
+                type: 'get',
+                dataType: "json",
+                data: {
+                    id: id,
+                    one: one
+                },
+                success: function () {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'เปลี่ยนสถานะสำเร็จ',
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
+                }
+            });
+            //
         }
     </script>
     <!-- plugin js -->

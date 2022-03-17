@@ -17,6 +17,7 @@ class CreateDataTable extends Migration
             $table->id();
             $table->text('url_before')->comment('ก่อน');
             $table->text('url_after')->comment('หลัง');
+            $table->integer('status')->comment('สเตตัส')->nullable();
             $table->timestamps();
         });
     }
