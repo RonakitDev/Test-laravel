@@ -46,8 +46,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Url before</th>
-                                <th>Url after</th>
+                                <th>Url ก่อน</th>
+                                <th>Url หลัง</th>
                                 <th>action</th>
                             </tr>
                             </thead>
