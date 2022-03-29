@@ -10,9 +10,6 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">Menu</li>
                 <li>
-                    <a href="#" class=" waves-effect">
-                        <span>Url</span>
-                    </a>
                     <a href="{{ route('logout') }}" class=" waves-effect" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
                         <span>Logout</span>

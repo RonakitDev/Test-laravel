@@ -18,12 +18,41 @@ class BitlyController extends Controller
      */
     public function index()
     {
-//        $url = Bitly::getUrl('https://www.youtube.com/watch?v=V69g4fo8oZ0&list=RDLYaTxW0mbdk&index=5'); // http://bit.ly/nHcn3
-//        dd($url);
-        $data = Data::all();
-        return view('index', [
-            'data' => $data
-        ]);
+        $data_success = [];
+        $data_num = range(1, 100);
+        foreach ($data_num as $value) {
+            if ($value % 3 == 0 && $value % 5 == 0) {
+                $value = 'ThreeFive';
+            } elseif ($value % 5 == 0) {
+                $value = 'Five';
+            } elseif ($value % 3 == 0) {
+                $value = 'Three';
+            }
+            array_push($data_success, $value);
+        }
+        $data_two = [];
+        $nums = [2, 2, 4, 3, 2];
+        $sum = 6;
+        $data = [];
+        for ($i = 0; $i < count($nums); $i++) {
+            for ($j = 0; $j < count($nums); $j++) {
+                if ($j != $i) {
+                    if ($nums[$i] + $nums[$j] == $sum) {
+                        array_push($data, $i);
+                        break;
+                    }
+                }
+            }
+        }
+        if ($data === []) {
+            $data = 'no output';
+        }
+        array_push($data_two, $nums, $sum, $data);
+        $data = array(
+            'data_success' => $data_success,
+            'data_two' => $data_two,
+        );
+        return view('index', $data);
     }
 
     /**
@@ -110,14 +139,13 @@ class BitlyController extends Controller
     public function shortenLink($code)
     {
         $find = Data::where('url_after', $code)->first();
-        if ($find){
+        if ($find) {
             if ($find->status) {
                 return redirect($find->url_before);
-            }
-            else {
+            } else {
                 return view('wait');
             }
-        }else {
+        } else {
             return view('wait');
         }
     }
