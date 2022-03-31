@@ -31,16 +31,14 @@ class BitlyController extends Controller
             array_push($data_success, $value);
         }
         $data_two = [];
-        $nums = [2, 2, 4, 3, 2];
+        $nums = [3,1,2,3];
         $sum = 6;
         $data = [];
         for ($i = 0; $i < count($nums); $i++) {
-            for ($j = 0; $j < count($nums); $j++) {
-                if ($j != $i) {
-                    if ($nums[$i] + $nums[$j] == $sum) {
-                        array_push($data, $i);
-                        break;
-                    }
+            for ($j = $i + 1; $j < count($nums); $j++) {
+                if ($nums[$i] + $nums[$j] == $sum) {
+                    array_push($data, $i,$j);
+                    break;
                 }
             }
         }
